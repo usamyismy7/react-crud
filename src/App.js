@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
 import AddUser from "./components/AddUser";
 import User from "./components/User";
 
@@ -44,6 +43,31 @@ const App = () => {
       });
   };
 
+  const onEdit = async (id, updatedUser) => {
+    await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedUser),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          return;
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        setUsers(
+          users.map((user) => (user.id === id ? { ...user, ...data } : user))
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onDelete = async (id) => {
     await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
       method: "DELETE",
@@ -66,18 +90,22 @@ const App = () => {
 
   console.log(users);
   return (
-    <div className="App">
-      <h3>React Crud Using Jsonplaceholder</h3>
+    <div className="">
+      <div className="m-4">
+        <h3 className="font-bold text-indigo-400 text-center">React CRUD</h3>
+      </div>
 
-      <br />
-      <AddUser onAdd={onAdd} />
-      <div>
+      <div className="flex justify-center items-center m-4">
+        <AddUser onAdd={onAdd} />
+      </div>
+      <div className="">
         {users.map((user) => (
           <User
             id={user.id}
             key={user.id}
             name={user.name}
             email={user.email}
+            onEdit={onEdit}
             onDelete={onDelete}
           />
         ))}
