@@ -40,4 +40,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ![screenshot](./assets/image.png)
 
-![video](./assets/video.mp4)
+https://github.com/usamyismy7/react-crud/assets/67833697/8c4cc3ab-c7cc-4cc7-872e-d48527d981e9
